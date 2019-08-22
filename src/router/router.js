@@ -1,4 +1,4 @@
-// 引入路由模块
+// 引入
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -13,6 +13,7 @@ export default new VueRouter({
       path: '/',
       redirect: { name: 'login' }
     },
+    // 添加登录路由
     {
       name: 'login',
       path: '/login',

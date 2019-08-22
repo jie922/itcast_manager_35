@@ -31,6 +31,31 @@ export default {
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       }
     }
+  },
+  methods: {
+    login () {
+      //   实现二次验证：实现弹出提示框，3秒后消失
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$message({
+            //    提示信息
+            message: '请求成功',
+            //   提示类型
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            //    提示信息
+            message: '请正确输入所有信息',
+            //   提示类型
+            type: 'warning'
+          })
+          //   //   另一种写法
+          //   this.$message.error('请正确输入所有信息')
+          return false
+        }
+      })
+    }
   }
 }
 </script>

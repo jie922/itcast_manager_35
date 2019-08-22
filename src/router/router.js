@@ -14,7 +14,7 @@ export default new VueRouter({
       redirect: { name: 'login' }
     },
     {
-      name: 'logn',
+      name: 'login',
       path: '/login',
       component: Login
     }

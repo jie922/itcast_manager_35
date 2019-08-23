@@ -42,7 +42,7 @@ export default {
           login(this.loginForm)
             .then((res) => {
               if (res.data.meta.status === 200) {
-                console.log(res)
+                // console.log(res)
                 // 将token存储到本地
                 localStorage.setItem('itcast_manager_35_Token', res.data.data.token)
                 // 实现页面跳转

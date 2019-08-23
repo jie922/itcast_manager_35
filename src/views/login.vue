@@ -42,7 +42,7 @@ export default {
           login(this.loginForm)
             .then((res) => {
               if (res.data.meta.status === 200) {
-                console.log(res)
+                this.$router.push({ name: 'home' })
               } else {
                 this.$message({
                   //    提示信息

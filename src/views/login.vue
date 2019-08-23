@@ -17,6 +17,8 @@
   </div>
 </template>
 <script>
+// 引入接口方法
+import { login } from '@/api/login_index.js'
 export default {
   data () {
     return {
@@ -37,12 +39,27 @@ export default {
       //   实现二次验证：实现弹出提示框，3秒后消失
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.$message({
-            //    提示信息
-            message: '请求成功',
-            //   提示类型
-            type: 'success'
-          })
+          login(this.loginForm)
+            .then((res) => {
+              if (res.data.meta.status === 200) {
+                console.log(res)
+              } else {
+                this.$message({
+                  //    提示信息
+                  message: res.data.meta.msg,
+                  //   提示类型
+                  type: 'warning'
+                })
+              }
+            })
+            .catch(() => {
+              this.$message({
+                //    提示信息
+                message: '服务器异常，请稍后重试',
+                //   提示类型
+                type: 'warning'
+              })
+            })
         } else {
           this.$message({
             //    提示信息

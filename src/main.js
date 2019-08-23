@@ -7,6 +7,22 @@ import 'element-ui/lib/theme-chalk/index.css'
 import router from '@/router/router.js'
 Vue.use(ElementUI)
 
+// 添加导航守卫
+router.beforeEach((to, from, next) => {
+  // 获取token值
+  let mytoken = localStorage.getItem('itcast_manager_35_Token')
+  // 判断
+  console.log(to)
+  console.log(from)
+  console.log(next)
+  if (mytoken || to.path === '/login') {
+    next()
+  } else {
+    // 重定向
+    next({ path: '/login' })
+  }
+})
+
 Vue.config.productionTip = false
 
 new Vue({

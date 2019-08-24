@@ -14,7 +14,7 @@
     <el-button type="success">添加用户</el-button>
     </div>
     <!-- 表格展示区域 -->
-     <el-table :data="tableData" border style="width: 100%; margin-top: 15px">
+     <el-table :data="usersList" border style="width: 100%; margin-top: 15px">
         <el-table-column type="index" width="50"> </el-table-column> <!--添加索引列-->
         <el-table-column prop="date" label="日期" width="180">
         </el-table-column>
@@ -48,29 +48,28 @@
   </div>
 </template>
 <script>
+import { getAllUsers } from '@/api/user_index.js'
 export default {
   data () {
     return {
       status: true,
       userskey: '',
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      usersList: [],
+      usersobj: {
+        query: '',
+        pagenum: 1,
+        pagesize: 2
+      }
     }
+  },
+  mounted () {
+    getAllUsers(this.usersobj)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 }
 </script>

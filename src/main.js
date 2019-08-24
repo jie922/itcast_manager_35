@@ -12,9 +12,9 @@ router.beforeEach((to, from, next) => {
   // 获取token值
   let mytoken = localStorage.getItem('itcast_manager_35_Token')
   // 判断
-  console.log(to)
-  console.log(from)
-  console.log(next)
+  // console.log(to)
+  // console.log(from)
+  // console.log(next)
   if (mytoken || to.path === '/login') {
     next()
   } else {

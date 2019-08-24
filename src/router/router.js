@@ -35,6 +35,7 @@ export default new VueRouter({
           path: 'welcome',
           component: Welcome
         },
+        // 添加用户列表
         {
           name: 'users',
           path: 'users',

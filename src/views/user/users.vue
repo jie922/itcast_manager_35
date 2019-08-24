@@ -16,16 +16,16 @@
     <!-- 表格展示区域 -->
      <el-table :data="usersList" border style="width: 100%; margin-top: 15px">
         <el-table-column type="index" width="50"> </el-table-column> <!--添加索引列-->
-        <el-table-column prop="date" label="日期" width="180">
+        <el-table-column prop="username" label="姓名" width="180">
         </el-table-column>
-        <el-table-column prop="name" label="姓名" width="180">
+        <el-table-column prop="email" label="邮箱" width="180">
         </el-table-column>
-        <el-table-column prop="address" label="地址">
+        <el-table-column prop="mobile" label="电话">
         </el-table-column>
         <!-- 用户状态列：使用自定义模板列，方便后期获取数据 -->
         <el-table-column label="用户状态">
-            <template>
-                <el-switch v-model="status" active-color="#13ce66" inactive-color="#ff4949">
+            <template slot-scope="scope">
+                <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949">
                     </el-switch>
             </template>
         </el-table-column>
@@ -52,7 +52,6 @@ import { getAllUsers } from '@/api/user_index.js'
 export default {
   data () {
     return {
-      status: true,
       userskey: '',
       usersList: [],
       usersobj: {

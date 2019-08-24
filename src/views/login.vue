@@ -85,25 +85,29 @@ export default {
   position: fixed;
   width: 100%;
   height: 100%;
-  background-color: #2f4050;
+  background-color: #fff;
   .container {
     position: absolute;
     left: 0;
     right: 0;
-    width: 400px;
+    width: 350px;
     padding: 0px 40px 15px 40px;
+    border: 1px solid #d4d1d1;
+    box-shadow: 0 1px 5px #ccc;
     margin: 200px auto;
     background: white;
+
     .avatar {
       position: relative;
       left: 50%;
       width: 120px;
       height: 120px;
       margin-left: -60px;
-      margin-top: -60px;
+      margin-top: 30px;
+      margin-bottom: 30px;
       box-sizing: border-box;
       border-radius: 50%;
-      border: 10px solid #fff;
+      border: 5px solid #fff;
       box-shadow: 0 1px 5px #ccc;
       overflow: hidden;
     }

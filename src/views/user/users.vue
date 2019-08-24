@@ -8,8 +8,9 @@
     </el-breadcrumb>
     <!-- 搜索区域 -->
     <div style="margin-top: 15px;">
-    <el-input placeholder="请输入内容" v-model="userskey" class="input-with-select" style="width:300px;margin-right:10px;">
-      <el-button slot="append" icon="el-icon-search"></el-button>
+    <el-input placeholder="请输入内容" v-model="usersobj.query"
+     class="input-with-select" style="width:300px;margin-right:10px;" @input.native="init">
+      <el-button slot="append" icon="el-icon-search" @click="init"></el-button>
     </el-input>
     <el-button type="success">添加用户</el-button>
     </div>
@@ -52,30 +53,35 @@ import { getAllUsers } from '@/api/user_index.js'
 export default {
   data () {
     return {
-      userskey: '',
       usersList: [],
       usersobj: {
         query: '',
         pagenum: 1,
-        pagesize: 2
+        pagesize: 4
       }
     }
   },
-  mounted () {
-    getAllUsers(this.usersobj)
-      .then(res => {
-        console.log(res)
-        if (res.data.meta.status === 200) {
-          this.usersList = res.data.data.users
-        } else if (res.data.meta.status === 400) {
+  methods: {
+    //   数据获取
+    init () {
+      getAllUsers(this.usersobj)
+        .then(res => {
+          console.log(res)
+          if (res.data.meta.status === 200) {
+            this.usersList = res.data.data.users
+          } else if (res.data.meta.status === 400) {
           // 弹出消息提示，并返回登录页面
-          this.$message.error(res.data.meta.msg)
-          this.$router.push({ name: 'login' })
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+            this.$message.error(res.data.meta.msg)
+            this.$router.push({ name: 'login' })
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
+  },
+  mounted () {
+    this.init()
   }
 }
 </script>

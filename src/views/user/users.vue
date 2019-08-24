@@ -14,6 +14,36 @@
     <el-button type="success">添加用户</el-button>
     </div>
     <!-- 表格展示区域 -->
+     <el-table :data="tableData" border style="width: 100%; margin-top: 15px">
+        <el-table-column type="index" width="50"> </el-table-column> <!--添加索引列-->
+        <el-table-column prop="date" label="日期" width="180">
+        </el-table-column>
+        <el-table-column prop="name" label="姓名" width="180">
+        </el-table-column>
+        <el-table-column prop="address" label="地址">
+        </el-table-column>
+        <!-- 用户状态列：使用自定义模板列，方便后期获取数据 -->
+        <el-table-column label="用户状态">
+            <template>
+                <el-switch v-model="status" active-color="#13ce66" inactive-color="#ff4949">
+                    </el-switch>
+            </template>
+        </el-table-column>
+        <!-- 操作列：使用自定义模板列，方便后期获取数据 -->
+        <el-table-column label="操作">
+            <template slot-scope="scope">
+                <el-tooltip class="item" effect="dark" content="编辑" placement="top">
+                    <el-button type="primary" plain icon="el-icon-edit"></el-button>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="分配角色" placement="top">
+                    <el-button type="success" plain icon="el-icon-share"></el-button>
+                </el-tooltip>
+                <el-tooltip class="item" effect="dark" content="删除" placement="top">
+                    <el-button type="danger" plain icon="el-icon-delete"></el-button>
+                </el-tooltip>
+            </template>
+        </el-table-column>
+    </el-table>
     <!-- 分页区域 -->
   </div>
 </template>
@@ -21,7 +51,25 @@
 export default {
   data () {
     return {
-      userskey: ''
+      status: true,
+      userskey: '',
+      tableData: [{
+        date: '2016-05-02',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1518 弄'
+      }, {
+        date: '2016-05-04',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1517 弄'
+      }, {
+        date: '2016-05-01',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1519 弄'
+      }, {
+        date: '2016-05-03',
+        name: '王小虎',
+        address: '上海市普陀区金沙江路 1516 弄'
+      }]
     }
   }
 }

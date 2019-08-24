@@ -66,6 +66,13 @@ export default {
     getAllUsers(this.usersobj)
       .then(res => {
         console.log(res)
+        if (res.data.meta.status === 200) {
+          this.usersList = res.data.data.users
+        } else if (res.data.meta.status === 400) {
+          // 弹出消息提示，并返回登录页面
+          this.$message.error(res.data.meta.msg)
+          this.$router.push({ name: 'login' })
+        }
       })
       .catch(err => {
         console.log(err)

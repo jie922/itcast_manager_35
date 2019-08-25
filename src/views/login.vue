@@ -92,10 +92,10 @@ export default {
     right: 0;
     width: 350px;
     padding: 0px 40px 15px 40px;
-    border: 1px solid #d4d1d1;
-    box-shadow: 0 1px 5px #ccc;
+    // border: 1px solid #e6e2e2;
+    box-shadow: 0 10px 20px #95b7bde0;
     margin: 200px auto;
-    background: white;
+    background: #95eff588;
 
     .avatar {
       position: relative;

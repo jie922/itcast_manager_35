@@ -46,6 +46,15 @@
         </el-table-column>
     </el-table>
     <!-- 分页区域 -->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="usersobj.pagenum"
+      :page-sizes="[1, 2, 3, 4]"
+      :page-size='usersobj.pagesize'
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="total">
+    </el-pagination>
   </div>
 </template>
 <script>
@@ -53,21 +62,38 @@ import { getAllUsers } from '@/api/user_index.js'
 export default {
   data () {
     return {
+      total: 0,
       usersList: [],
       usersobj: {
         query: '',
         pagenum: 1,
-        pagesize: 4
+        pagesize: 5
       }
     }
   },
   methods: {
+    // 切换sizes下拉列表时触发
+    handleSizeChange (val) {
+      // console.log(`每页 ${val} 条`)
+      this.usersobj.pagesize = val
+      this.init()
+    },
+    // 切换当前页码时触发
+    handleCurrentChange (val) {
+      // console.log(`当前页: ${val}`)
+      // 修改参数
+      this.usersobj.pagenum = val
+      // 重新请求
+      this.init()
+    },
     //   数据获取
     init () {
       getAllUsers(this.usersobj)
         .then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.data.meta.status === 200) {
+            // 获取记录总数
+            this.total = res.data.data.total
             this.usersList = res.data.data.users
           } else if (res.data.meta.status === 400) {
           // 弹出消息提示，并返回登录页面

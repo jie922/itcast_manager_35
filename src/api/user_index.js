@@ -42,3 +42,11 @@ export const delUserById = (id) => {
     method: 'delete'
   })
 }
+
+// 修改用户状态
+export const getUserstate = (uId, type) => {
+  return axios({
+    url: `users/${uId}/state/${type}`,
+    method: 'put'
+  })
+}

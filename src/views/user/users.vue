@@ -26,8 +26,9 @@
         <!-- 用户状态列：使用自定义模板列，方便后期获取数据 -->
         <el-table-column label="用户状态">
             <template slot-scope="scope">
-                <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949">
-                    </el-switch>
+                <el-switch v-model="scope.row.mg_state" active-color="#13ce66"
+                 inactive-color="#ff4949" @change='changestate(scope.row.id,scope.row.mg_state)'>
+                </el-switch>
             </template>
         </el-table-column>
         <!-- 操作列：使用自定义模板列，方便后期获取数据 -->
@@ -124,7 +125,7 @@
   </div>
 </template>
 <script>
-import { getAllUsers, addUser, editUser, grantUserRole, delUserById } from '@/api/user_index.js'
+import { getAllUsers, addUser, editUser, grantUserRole, delUserById, getUserstate } from '@/api/user_index.js'
 import { getAllRoleList } from '@/api/role_index.js'
 export default {
   data () {
@@ -190,6 +191,33 @@ export default {
     }
   },
   methods: {
+    // 修改用户状态
+    changestate (uId, type) {
+      // console.log(row)
+      getUserstate(uId, type)
+        .then(res => {
+          if (res.data.meta.status === 200) {
+            this.$message({
+              type: 'success',
+              message: '修改状态成功'
+            })
+            this.init()
+          } else {
+            this.$message({
+              type: 'error',
+              message: res.data.meta.msg
+            })
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: 'error',
+            message: '修改状态失败'
+          })
+        })
+      // getUserstate
+    },
+
     // 使用id删除用户数据
     delUser (id) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {

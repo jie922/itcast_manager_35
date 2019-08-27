@@ -42,7 +42,7 @@
                      @click="showGrantDialog(scope.row)"></el-button>
                 </el-tooltip>
                 <el-tooltip class="item" effect="dark" content="删除" placement="top">
-                    <el-button type="danger" plain icon="el-icon-delete"></el-button>
+                    <el-button type="danger" plain icon="el-icon-delete" @click='delUser(scope.row.id)'></el-button>
                 </el-tooltip>
             </template>
         </el-table-column>
@@ -124,20 +124,20 @@
   </div>
 </template>
 <script>
-import { getAllUsers, addUser, editUser, grantUserRole } from '@/api/user_index.js'
+import { getAllUsers, addUser, editUser, grantUserRole, delUserById } from '@/api/user_index.js'
 import { getAllRoleList } from '@/api/role_index.js'
 export default {
   data () {
     return {
 
       roleList: [], // 角色列表
-      total: 0,
+      total: 0, // 总记录数
       usersList: [], // 当前页表格内用户的所有数据
       // 分页刷新默认数据
       usersobj: {
         query: '',
-        pagenum: 3,
-        pagesize: 3
+        pagenum: 1, // 当前页
+        pagesize: 3 // 每页显示几条数据
       },
       // 添加用户数据验证提示
       rules: {
@@ -190,7 +190,46 @@ export default {
     }
   },
   methods: {
-
+    // 使用id删除用户数据
+    delUser (id) {
+      this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        delUserById(id)
+          .then(res => {
+            console.log(res)
+            if (res.data.meta.status === 200) {
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+              if (this.usersList.length === 1) {
+                if (this.usersobj.pagenum > 1) {
+                  this.usersobj.pagenum--
+                }
+              }
+              this.init()
+            } else {
+              this.$message({
+                type: 'error',
+                message: res.data.meta.msg
+              })
+            }
+          }).catch(() => {
+            this.$message({
+              type: 'error',
+              message: '删除失败'
+            })
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消删除'
+        })
+      })
+    },
     // 新增用户
     add () {
       this.$refs.addForm.validate((valid) => {
